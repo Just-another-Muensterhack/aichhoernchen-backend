@@ -15,17 +15,15 @@ class Command(BaseCommand):
         deposits = set(LostPropertyOffice.objects.all().values_list("name", flat=True))
         with open(settings.BASE_DIR / "finder" / "static" / "offices.json", "r") as json_file:
             data = json.load(json_file)
+            LostPropertyOffice.objects.filter(name__in=deposits).delete()
 
             for office in data:
-                if (name := office.get("name")) and name in deposits:
-                    continue
-
-                LostPropertyOffice.objects.create(
-                    name=name,
+                LostPropertyOffice.objects.update_or_create(
+                    name=office.get("name", ""),
                     email=office.get("email", ""),
                     phone=office.get("phone", ""),
-                    address=f"{office.get("address", "")}, {office.get('zip_city', '')}",
+                    address=f"{office.get("street", "")}, {office.get('zip_city', '')}",
                     link=office.get("webseite", ""),
                     lat=office.get("lat", 0.0),
-                    long=office.get("long", 0.0),
+                    long=office.get("lng", 0.0),
                 )
