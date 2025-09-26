@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import strawberry
 from strawberry.scalars import JSON
-from strawberry.uploads import Upload
+from strawberry.file_uploads import Upload
 
 from ..services.image_analysis import analyze_image, ImageAnalysisError
 
