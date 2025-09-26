@@ -74,11 +74,16 @@ class LostPropertyOfficeOrder:
     link: auto
     lat: auto
     long: auto
-    found_objects: Optional[FoundObjectOrder]
+    found_objects: FoundObjectOrder
 
 
 # types
-@graphql_type(FoundObject)
+@graphql_type(
+    FoundObject,
+    filters=FoundObjectFilter,
+    ordering=FoundObjectOrder,
+    pagination=True,
+)
 class FoundObjectType:
     id: auto
     short_title: auto
@@ -91,16 +96,26 @@ class FoundObjectType:
     deposit: Optional[LostPropertyOfficeType]
 
 
-@graphql_type(Finder)
+@graphql_type(
+    Finder,
+    filters=FinderFilter,
+    ordering=FinderOrder,
+    pagination=True,
+)
 class FinderType:
     id: auto
     name: auto
     email: auto
     phone: auto
-    found_object: FoundObject
+    found_object: FoundObjectType
 
 
-@graphql_type(LostPropertyOffice)
+@graphql_type(
+    LostPropertyOffice,
+    filters=LostPropertyOfficeFilter,
+    ordering=LostPropertyOfficeOrder,
+    pagination=True,
+)
 class LostPropertyOfficeType:
     id: auto
     name: auto
@@ -110,4 +125,4 @@ class LostPropertyOfficeType:
     link: auto
     lat: auto
     long: auto
-    found_objects: list[FoundObject]
+    found_objects: list[FoundObjectType]

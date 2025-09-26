@@ -23,6 +23,6 @@ class LostPropertyOffice(models.Model):
     email = models.EmailField()
     phone = models.TextField()
     address = models.TextField()
-    link = models.TextField()
+    link = models.TextField(null=True, blank=True)
     lat = models.DecimalField(max_digits=9, decimal_places=6)
     long = models.DecimalField(max_digits=9, decimal_places=6)
