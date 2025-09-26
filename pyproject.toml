@@ -21,6 +21,7 @@ dependencies = [
     "django>=5.2.6",
     "pillow>=11.3.0",
     "psycopg[binary]>=3.2.10",
+    "smolagents[openai]>=1.22.0",
     "strawberry-graphql-django>=0.65.1",
 ]
 
