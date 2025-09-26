@@ -2,13 +2,23 @@ from __future__ import annotations
 
 from typing import Optional
 
+from django.db.models import Q, QuerySet
+from geopy.distance import distance
 from strawberry import auto
-from strawberry_django import filter_type, input, order_type, type
+from strawberry.scalars import JSON
+from strawberry_django import filter_field, filter_type, input, order_type, type
 
 from .models import FoundObject, LostPropertyOffice
 
 
 # filters
+@filter_type
+class LocationType:
+    lat: float
+    long: float
+    distance: float
+
+
 @filter_type(FoundObject, lookups=True)
 class FoundObjectFilter:
     short_title: auto
@@ -26,8 +36,25 @@ class LostPropertyOfficeFilter:
     name: auto
     email: auto
     phone: auto
+    lat: auto
+    long: auto
     address: auto
     link: auto
+
+    @filter_field
+    def test_distance(
+        self,
+        queryset: QuerySet,
+        value: JSON,
+        prefix: str,
+    ) -> tuple[QuerySet, Q]:
+        filtered_obj = []
+
+        for obj in queryset:
+            obj_distance = distance((value.get("lat"), value.get("long")), (obj.lat, obj.long)).km
+            if obj_distance <= value.get("distance"):
+                filtered_obj.append(obj.pk)
+        return queryset, Q(pk__in=filtered_obj)
 
 
 # ordering
