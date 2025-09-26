@@ -12,6 +12,7 @@ RUN apk add --no-cache \
 COPY pyproject.toml uv.lock README.md LICENSE ./
 
 RUN --mount=type=cache,target=/root/.cache/uv \
+    uv add gunicorn && \
     uv sync --frozen --no-editable --no-default-groups
 
 COPY src/ ./src/
