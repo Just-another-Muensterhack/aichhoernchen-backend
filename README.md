@@ -20,7 +20,7 @@ This is a template for creating Python projects. It includes a basic project str
 
 1. **Clone the repository:**
     ```sh
-    git clone https://github.com/Paul-B98/python-project-template.git
+    git clone https://github.com/Just-another-Muensterhack/aichhoernchen-backend.git
     cd python-project-template
     ```
 

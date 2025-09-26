@@ -1,8 +1,8 @@
 [project]
-name = "project_name"  # TODO
-description = "Template for python project"  # TODO
+name = "aichhoernchen"
+description = "A Münsterhack 2025 Project"
 version = "0.0.1"
-license = "MIT"  # TODO
+license = "MIT"
 authors = [
     { name = "Paul-B98", email = "115164840+Paul-B98@users.noreply.github.com" }  # TODO
 ]
@@ -10,24 +10,32 @@ maintainers = [
     { name = "Paul-B98", email = "115164840+Paul-B98@users.noreply.github.com" }  # TODO
 ]
 readme = "README.md"
-keywords = ["Python Lib"]  # TODO
+keywords = ["Python Lib"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
 requires-python = ">=3.13"
+dependencies = [
+    "django>=5.2.6",
+    "psycopg[binary]>=3.2.10",
+    "strawberry-graphql-django>=0.65.1",
+]
 
 [project.urls]
-homepage = "https://github.com/Paul-B98/python-project-template"  # TODO
-repository = "https://github.com/Paul-B98/python-project-template"  # TODO
-changelog = "https://github.com/Paul-B98/python-project-template/releases"  # TODO
-issues = "https://github.com/Paul-B98/python-project-template/issues"  # TODO
-documentation = "https://github.com/Paul-B98/python-project-template/wiki"  # TODO
+homepage = "https://github.com/Just-another-Muensterhack/aichhoernchen-backend"
+repository = "https://github.com/Just-another-Muensterhack/aichhoernchen-backend"
+changelog = "https://github.com/Just-another-Muensterhack/aichhoernchen-backend/releases"
+issues = "https://github.com/Just-another-Muensterhack/aichhoernchen-backend/issues"
+documentation = "https://github.com/Just-another-Muensterhack/aichhoernchen-backend/wiki"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aichhoernchen"]
 
 [dependency-groups]
 dev = [

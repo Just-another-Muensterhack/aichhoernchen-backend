@@ -6,7 +6,7 @@ on: push
 
 jobs:
   build:
-    # environment: project_name
+    # environment: aihoernchen
     runs-on: ubuntu-latest
     strategy:
       matrix:

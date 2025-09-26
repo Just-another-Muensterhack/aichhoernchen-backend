@@ -6,7 +6,7 @@ _A Python package to detect AKI within time series data._ <br>
 
 ---
 
-**Source Code:** [https://github.com/Paul-B98/python-project-template](https://github.com/Paul-B98/python-project-template) <br>
+**Source Code:** [https://github.com/Just-another-Muensterhack/aichhoernchen-backend](https://github.com/Just-another-Muensterhack/aichhoernchen-backend) <br>
 
 ---
 

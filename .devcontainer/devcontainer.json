@@ -1,6 +1,6 @@
 {
-	"name": "Python 3.13 Project",
-	"service": "python",
+	"name": "AIhörnchen",
+	"service": "aihoernchen",
 	"remoteUser": "vscode",
 	"workspaceFolder": "/workspaces",
 	"dockerComposeFile": "docker-compose.yml",

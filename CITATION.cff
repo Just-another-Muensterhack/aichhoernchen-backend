@@ -9,11 +9,11 @@ type: software
 version: 0.0.1
 date-released: 2025-01-01
 license: MIT
-url: https://github.com/Paul-B98/python-project-template
-repository-code: https://github.com/Paul-B98/python-project-template
+url: https://github.com/Just-another-Muensterhack/aichhoernchen-backend
+repository-code: https://github.com/Just-another-Muensterhack/aichhoernchen-backend
 identifiers:
 - type: url
-  value: https://github.com/Paul-B98/python-project-template
+  value: https://github.com/Just-another-Muensterhack/aichhoernchen-backend
 keywords:
 - python
 - development

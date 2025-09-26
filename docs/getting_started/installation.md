@@ -25,12 +25,12 @@ The library can be installed from source (GitHub).
 
 **With pip**
 ```bash
-pip install git+https://github.com/Paul-B98/python-project-template
+pip install git+https://github.com/Just-another-Muensterhack/aichhoernchen-backend
 ```
 
 **With uv**
 ```bash
-uv add git+https://github.com/Paul-B98/python-project-template
+uv add git+https://github.com/Just-another-Muensterhack/aichhoernchen-backend
 ```
 
 ## Dependencies
