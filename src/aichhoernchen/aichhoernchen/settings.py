@@ -131,3 +131,9 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 25 * 1024 * 1024  # 25 MB
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# AI settings
+INFERENCE_API_URL = os.getenv("INFERENCE_API_URL", "http://inference:8000")
+INFERENCE_API_KEY = os.getenv("INFERENCE_API_KEY", "changeme")
+INFERENCE_MODEL_NAME = os.getenv("INFERENCE_MODEL_NAME", "gpt-4o-mini")
+PROMPT_TEMPLATE_FILE = os.getenv("PROMPT_TEMPLATE_FILE", "prompts/image_analysis.md")
