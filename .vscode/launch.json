@@ -7,7 +7,8 @@
             "request": "launch",
             "program": "${workspaceFolder}/src/aichhoernchen/manage.py",
             "args": [
-                "runserver 0.0.0.0:8000"
+                "runserver",
+                "0.0.0.0:8000"
             ],
             "django": true,
             "justMyCode": true

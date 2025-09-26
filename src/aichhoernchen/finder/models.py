@@ -8,9 +8,8 @@ class FoundObject(models.Model):
     lat = models.DecimalField(max_digits=9, decimal_places=6)
     long = models.DecimalField(max_digits=9, decimal_places=6)
     timestamp = models.DateTimeField(auto_now_add=True)
-    finder = models.ForeignKey("Finder", on_delete=models.SET_NULL, null=True, blank=True)
+    finder = models.OneToOneField("Finder", on_delete=models.CASCADE)
     deposit = models.ForeignKey("LostPropertyOffice", on_delete=models.SET_NULL, null=True, blank=True)
-
 
 
 class Finder(models.Model):
