@@ -2,47 +2,18 @@ from __future__ import annotations
 
 from typing import Optional
 
-from django.db.models import QuerySet
-from geopy.distance import distance
 from strawberry import auto
-from strawberry_django import filter_type, order_type
-from strawberry_django import input as graphql_input
-from strawberry_django import type as graphql_type
-from strawberry_django.filters import filter as graphql_filter
+from strawberry_django import filter_type, input, order_type, type
 
 from .models import FoundObject, LostPropertyOffice
 
 
 # filters
-@graphql_input
-class LocationInput:
-    lat: float
-    long: float
-    distance: float
-
-@graphql_filter
-class LocationFilter:
-    location: LocationInput
-
-    def filter_location(
-        self,
-        queryset: QuerySet,
-    ) -> QuerySet:
-        filtered_obj = []
-        for obj in queryset:
-            obj_distance = distance((self.location.lat, self.location.long), (obj.lat, obj.long)).km
-            if obj_distance <= self.location.distance:
-                filtered_obj.append(obj.pk)
-        return queryset.filter(pk__in=filtered_obj)
-
-
 @filter_type(FoundObject, lookups=True)
 class FoundObjectFilter:
     short_title: auto
     long_title: auto
     description: auto
-    lat: auto
-    long: auto
     timestamp: auto
     finder_name: auto
     finder_email: auto
@@ -57,10 +28,6 @@ class LostPropertyOfficeFilter:
     phone: auto
     address: auto
     link: auto
-    lat: auto
-    long: auto
-    found_objects: Optional[FoundObjectFilter]
-    locattion: Optional[LocationFilter]
 
 
 # ordering
@@ -94,7 +61,7 @@ class LostPropertyOfficeOrder:
 
 
 # types
-@graphql_type(
+@type(
     FoundObject,
     filters=FoundObjectFilter,
     ordering=FoundObjectOrder,
@@ -115,7 +82,7 @@ class FoundObjectType:
 
 
 
-@graphql_type(
+@type(
     LostPropertyOffice,
     filters=LostPropertyOfficeFilter,
     ordering=LostPropertyOfficeOrder,
@@ -134,7 +101,7 @@ class LostPropertyOfficeType:
 
 
 # inputs
-@graphql_input(FoundObject)
+@input(FoundObject)
 class FoundObjectInput:
     short_title: auto
     long_title: auto
