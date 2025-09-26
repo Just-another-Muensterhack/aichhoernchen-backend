@@ -3,12 +3,13 @@ services:
     image: ghcr.io/just-another-muensterhack/aichhoernchen-backend
     restart: always
     ports:
-      - "8000:80"
+      - "8000:8000"
     environment:
       DB_HOST: postgres
       DB_NAME: aichhoernchen
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
+      SECRET_KEY: apsfihagljhaglajhl
 
   postgres:
     image: postgres
