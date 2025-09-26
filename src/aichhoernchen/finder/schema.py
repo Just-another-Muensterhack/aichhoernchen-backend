@@ -1,5 +1,7 @@
 import strawberry
 import strawberry_django
+from django.core.files.uploadedfile import UploadedFile
+from strawberry.file_uploads import Upload
 from strawberry_django import mutations
 from strawberry_django.optimizer import DjangoOptimizerExtension
 
@@ -19,6 +21,10 @@ class Query:
 @strawberry.type
 class Mutation:
     found_object: FoundObjectType = mutations.create(FoundObjectInput)
+    
+    @strawberry.mutation
+    def read_image(self, image: Upload) -> str:
+        return image.read().decode("utf-8")
 
 
 schema = strawberry.Schema(
@@ -27,4 +33,5 @@ schema = strawberry.Schema(
     extensions=[
         DjangoOptimizerExtension,
     ],
+    scalar_overrides={UploadedFile: Upload}
 )
