@@ -3,10 +3,10 @@ from __future__ import annotations
 from typing import Optional
 
 from strawberry import auto
-from strawberry.django import filters, order_type
-from strawberry.django import type as graphql_type
+from strawberry_django import filters, order_type
+from strawberry_django import type as graphql_type
 
-from .models import Finder, FoundObject, LostPropertyOffice
+from .models import FoundObject, LostPropertyOffice
 
 
 # filters
@@ -18,16 +18,10 @@ class FoundObjectFilter:
     lat: auto
     long: auto
     timestamp: auto
-    finder: Optional[FinderFilter]
+    finder_name: auto
+    finder_email: auto
+    finder_phone: auto
     deposit: Optional[LostPropertyOfficeFilter]
-
-
-@filters.filter_type(Finder)
-class FinderFilter:
-    name: auto
-    email: auto
-    phone: auto
-    found_objects: Optional[FoundObjectFilter]
 
 
 @filters.filter_type(LostPropertyOffice)
@@ -51,17 +45,12 @@ class FoundObjectOrder:
     description: auto
     lat: auto
     long: auto
+    finder_name: auto
+    finder_email: auto
+    finder_phone: auto
     timestamp: auto
+    deposit: LostPropertyOfficeOrder
 
-
-
-@order_type(Finder)
-class FinderOrder:
-    id: auto
-    name: auto
-    email: auto
-    phone: auto
-    found_object: FoundObjectOrder
 
 
 @order_type(LostPropertyOffice)
@@ -85,29 +74,17 @@ class LostPropertyOfficeOrder:
     pagination=True,
 )
 class FoundObjectType:
-    id: auto
     short_title: auto
     long_title: auto
     description: auto
     lat: auto
     long: auto
     timestamp: auto
-    finder: FinderType
+    finder_name: auto
+    finder_email: auto
+    finder_phone: auto
     deposit: Optional[LostPropertyOfficeType]
 
-
-@graphql_type(
-    Finder,
-    filters=FinderFilter,
-    ordering=FinderOrder,
-    pagination=True,
-)
-class FinderType:
-    id: auto
-    name: auto
-    email: auto
-    phone: auto
-    found_object: FoundObjectType
 
 
 @graphql_type(
@@ -117,12 +94,11 @@ class FinderType:
     pagination=True,
 )
 class LostPropertyOfficeType:
-    id: auto
     name: auto
-    address: auto
-    phone: auto
     email: auto
+    phone: auto
+    address: auto
     link: auto
     lat: auto
     long: auto
-    found_objects: list[FoundObjectType]
+    found_objects: Optional[FoundObjectType]
