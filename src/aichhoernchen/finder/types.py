@@ -2,16 +2,41 @@ from __future__ import annotations
 
 from typing import Optional
 
+from django.db.models import QuerySet
+from geopy.distance import distance
 from strawberry import auto
-from strawberry_django import filters, order_type
+from strawberry_django import filter_type, order_type
 from strawberry_django import input as graphql_input
 from strawberry_django import type as graphql_type
+from strawberry_django.filters import filter as graphql_filter
 
 from .models import FoundObject, LostPropertyOffice
 
 
 # filters
-@filters.filter_type(FoundObject)
+@graphql_input
+class LocationInput:
+    lat: float
+    long: float
+    distance: float
+
+@graphql_filter
+class LocationFilter:
+    location: LocationInput
+
+    def filter_location(
+        self,
+        queryset: QuerySet,
+    ) -> QuerySet:
+        filtered_obj = []
+        for obj in queryset:
+            obj_distance = distance((self.location.lat, self.location.long), (obj.lat, obj.long)).km
+            if obj_distance <= self.location.distance:
+                filtered_obj.append(obj.pk)
+        return queryset.filter(pk__in=filtered_obj)
+
+
+@filter_type(FoundObject, lookups=True)
 class FoundObjectFilter:
     short_title: auto
     long_title: auto
@@ -25,7 +50,7 @@ class FoundObjectFilter:
     deposit: Optional[LostPropertyOfficeFilter]
 
 
-@filters.filter_type(LostPropertyOffice)
+@filter_type(LostPropertyOffice, lookups=True)
 class LostPropertyOfficeFilter:
     name: auto
     email: auto
@@ -35,6 +60,7 @@ class LostPropertyOfficeFilter:
     lat: auto
     long: auto
     found_objects: Optional[FoundObjectFilter]
+    locattion: Optional[LocationFilter]
 
 
 # ordering
