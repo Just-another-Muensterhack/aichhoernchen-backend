@@ -42,7 +42,6 @@ services:
       /usr/bin/mc admin user add minio aichhoernchen aichhoernchen ;
       /usr/bin/mc admin policy attach minio readwrite --user aichhoernchen;
       exit 0;"
-
 volumes:
     postgres_data:
     minio_data:
