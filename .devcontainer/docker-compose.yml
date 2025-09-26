@@ -4,6 +4,8 @@ services:
     extra_hosts:
       - host.docker.internal:host-gateway
     init: true
+    ports:
+      - 8000:8000
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile

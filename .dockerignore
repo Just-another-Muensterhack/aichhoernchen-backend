@@ -1,37 +1,52 @@
 # Python
-__pycache__
-*.pyc
+__pycache__/
+*.py[cod]
 *.pyo
 *.pyd
 .Python
-env
-pip-log.txt
-pip-delete-this-directory.txt
+*.so
+*.egg-info/
 .tox
+.venv/
+env/
+venv/
+
+# Test/coverage
 .coverage
 .coverage.*
-.cache
-nosetests.xml
+.nosetests.xml
 coverage.xml
 *.cover
 *.log
-.mypy_cache
-.pytest_cache
-.hypothesis
-.venv
+.mypy_cache/
+.pytest_cache/
+.hypothesis/
+.cache/
 
-# Git
-.git
-
-# Project
-.cache
-.devcontainer
-.github
-.vscode
+# Git & Dev
+.git/
 .gitignore
+.gitattributes
+.devcontainer/
+.github/
+.vscode/
 
-# Tools
-.pre-commit-config
-.ruff.toml
+# Project/Docs
 CITATION.cff
+CLAUDE.md
 mkdocs.yml
+docs/
+site/
+
+# Tools/Config
+.pre-commit-config*
+.ruff.toml
+
+# Local stuff
+*.swp
+*.tmp
+*.bak
+.env
+dist/
+build/
+htmlcov/
