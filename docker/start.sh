@@ -17,6 +17,9 @@ python /app/src/aichhoernchen/manage.py migrate --noinput
 echo "==> Collecting static files..."
 python /app/src/aichhoernchen/manage.py collectstatic --noinput
 
+echo "==> Collecting static files..."
+python /app/src/aichhoernchen/manage.py default_deposits
+
 echo "==> Starting Uvicorn on 0.0.0.0:${PORT}..."
 exec uvicorn src.aichhoernchen.aichhoernchen.asgi:application \
   --host 0.0.0.0 \
