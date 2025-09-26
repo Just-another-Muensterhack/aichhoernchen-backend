@@ -2,7 +2,11 @@ import strawberry
 import strawberry_django
 from strawberry_django.optimizer import DjangoOptimizerExtension
 
+from PIL import Image
+from typing import Any
+
 from .types import FoundObjectType, LostPropertyOfficeType
+#from .agent import UploadAgent
 
 
 @strawberry.type
@@ -17,12 +21,16 @@ class Query:
 
 @strawberry.type
 class Mutation:
-    pass
+    @strawberry.mutation
+    def analyze_image(self, file: Any) -> dict[str, int]:
+        image = Image.open(file)
+        width, height = image.size
+        return {"width": width, "height": height}
 
 
 schema = strawberry.Schema(
     query=Query,
     extensions=[
         DjangoOptimizerExtension,
-    ],
+    ]
 )
