@@ -1,17 +1,31 @@
-# Build stage
+# ---------- Builder: install deps ----------
 FROM ghcr.io/astral-sh/uv:python3.13-alpine AS builder
 
 WORKDIR /app
 
-# Copy the project into the intermediate image
-ADD . /app
+RUN apk add --no-cache \
+    gcc \
+    musl-dev \
+    libpq-dev \
+    python3-dev
 
-# Sync the project
+COPY pyproject.toml uv.lock README.md LICENSE ./
+
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --locked --no-editable --no-default-groups
+    uv sync --frozen --no-editable --no-default-groups
 
-# Final image stage
+COPY src/ ./src/
+
+RUN . .venv/bin/activate && python -m compileall -q src
+
+# ---------- Final: runtime ----------
 FROM python:3.13-alpine
+
+RUN apk add --no-cache \
+    libpq \
+    postgresql-client \
+    curl \
+    bash
 
 RUN addgroup -S app && adduser -S -G app app
 USER app
@@ -19,7 +33,18 @@ USER app
 WORKDIR /app
 
 COPY --from=builder --chown=app:app /app/.venv /app/.venv
-COPY src/ /app
-COPY docker/ /app
+COPY --chown=app:app src/ /app/src/
+COPY --chown=app:app docker/start.sh /app/start.sh
 
-CMD ["/bin/sh", "start.sh"]
+RUN chmod +x /app/start.sh
+
+ENV PATH="/app/.venv/bin:$PATH" \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH="/app/src/" \
+    DJANGO_SETTINGS_MODULE=aichhoernchen.settings \
+    PORT=8000
+
+EXPOSE 8000
+
+CMD ["/app/start.sh"]
