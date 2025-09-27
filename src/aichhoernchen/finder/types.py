@@ -30,6 +30,21 @@ class FoundObjectFilter:
     finder_phone: auto
     deposit: Optional[LostPropertyOfficeFilter]
 
+    @filter_field
+    def distance(
+        self,
+        queryset: QuerySet,
+        value: JSON,
+        prefix: str,
+    ) -> tuple[QuerySet, Q]:
+        filtered_obj = []
+
+        for obj in queryset:
+            obj_distance = distance((value.get("lat"), value.get("long")), (obj.lat, obj.long)).km
+            if obj_distance <= value.get("distance"):
+                filtered_obj.append(obj.pk)
+        return queryset, Q(pk__in=filtered_obj)
+
 
 @filter_type(LostPropertyOffice, lookups=True)
 class LostPropertyOfficeFilter:
@@ -42,7 +57,7 @@ class LostPropertyOfficeFilter:
     link: auto
 
     @filter_field
-    def test_distance(
+    def distance(
         self,
         queryset: QuerySet,
         value: JSON,
