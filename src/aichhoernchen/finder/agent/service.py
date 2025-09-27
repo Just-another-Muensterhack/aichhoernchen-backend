@@ -14,7 +14,7 @@ class ImageAnalyser:
             azure_endpoint=settings.AZURE_ENDPOINT,
             api_key=settings.AZURE_API_KEY,
         )
-        self.analyer_prompt_file = settings.IMAGE_ANALYZER_PROMPT_FILE
+        self.analyer_prompt_file = settings.BASE_DIR / "finder" / "agent" / "prompts" / "image.md"
 
     def __load_prompt(self) -> str:
         with open(self.analyer_prompt_file, "r") as file:

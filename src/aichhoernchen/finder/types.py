@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Optional
 
+import strawberry
 from django.db.models import Q, QuerySet
 from geopy.distance import distance
 from strawberry import auto
@@ -126,6 +127,13 @@ class LostPropertyOfficeType:
     long: auto
     found_objects: Optional[FoundObjectType]
 
+
+@strawberry.type
+class ImageAnalyserResponse:
+    short_title: str
+    long_title: str
+    description: str
+    spam_score: int
 
 # inputs
 @input(FoundObject)

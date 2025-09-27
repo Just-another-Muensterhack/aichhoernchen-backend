@@ -6,7 +6,7 @@ from strawberry_django import mutations
 from strawberry_django.optimizer import DjangoOptimizerExtension
 
 from .agent.service import ImageAnalyser
-from .types import FoundObjectInput, FoundObjectType, LostPropertyOfficeType
+from .types import FoundObjectInput, FoundObjectType, ImageAnalyserResponse, LostPropertyOfficeType
 
 
 @strawberry.type
@@ -18,26 +18,16 @@ class Query:
     lost_property_offices: list[LostPropertyOfficeType] = strawberry_django.field()
 
 
-@strawberry.type
-class ImageAnalyserResponse:
-    short_title: str
-    long_title: str
-    description: str
-    spam_score: int
-
-
-ImageAnalyserResponseType = strawberry.union("ImageAnalyserResponseType", (ImageAnalyserResponse,))
-
 
 @strawberry.type
 class Mutation:
     found_object: FoundObjectType = mutations.create(FoundObjectInput)
 
     @strawberry.mutation
-    def read_image(self, image: Upload) -> ImageAnalyserResponseType:
+    def read_image(self, image: Upload) -> ImageAnalyserResponse:
         analyser = ImageAnalyser()
         response = analyser.analyse_image(image.read())
-        return ImageAnalyserResponseType(
+        return ImageAnalyserResponse(
             short_title=response.get("short_title", ""),
             long_title=response.get("long_title", ""),
             description=response.get("description", ""),

@@ -144,6 +144,3 @@ AZURE_ENDPOINT = os.getenv("AZURE_ENDPOINT")
 AZURE_MODEL_NAME = os.getenv("AZURE_MODEL_NAME")
 AZURE_API_KEY = os.getenv("AZURE_API_KEY")
 AZURE_API_VERSION = os.getenv("AZURE_API_VERSION", "2025-03-01-preview")
-
-# Image Analyzer path to prompt file
-IMAGE_ANALYZER_PROMPT_FILE = os.getenv("IMAGE_ANALYZER_PROMPT_FILE", "finder/agent/prompts/image.md")
