@@ -57,3 +57,14 @@ This project uses [arc42](https://docs.arc42.org/home/) to document the requirem
 ### Additional features
 
 * [Dev Container Feature](https://containers.dev/features)
+
+## Testing
+
+To test the file upload:
+
+```bash
+curl localhost:8000/graphql/ \
+  -F operations='{ "query": "mutation($image: Upload!) {readImage(image: $image)}", "variables": { "image": null } }' \
+  -F map='{ "image": ["variables.image"] }' \
+  -F image=@images.jpg
+```
