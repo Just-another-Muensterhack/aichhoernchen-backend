@@ -6,7 +6,14 @@ from strawberry_django import mutations
 from strawberry_django.optimizer import DjangoOptimizerExtension
 
 from .agent.service import ImageAnalyser
-from .types import FoundObjectInput, FoundObjectType, ImageAnalyserResponse, LostPropertyOfficeType
+from .models import FoundObject
+from .types import (
+    FoundObjectCreateType,
+    FoundObjectInput,
+    FoundObjectType,
+    ImageAnalyserResponse,
+    LostPropertyOfficeType,
+)
 
 
 @strawberry.type
@@ -21,7 +28,7 @@ class Query:
 
 @strawberry.type
 class Mutation:
-    found_object: FoundObjectType = mutations.create(FoundObjectInput)
+    found_object: FoundObjectCreateType = mutations.create(FoundObjectInput)
 
     @strawberry.mutation
     def read_image(self, image: Upload) -> ImageAnalyserResponse:
@@ -34,6 +41,13 @@ class Mutation:
             spam_score=int(response.get("spam_score", 0)),
         )
 
+    @strawberry.mutation
+    def delete_object(self, pk: int, key: str) -> bool:
+        try:
+            FoundObject.objects.get(pk=pk, key=key).delete()
+        except FoundObject.DoesNotExist:
+            return False
+        return True
 
 schema = strawberry.Schema(
     query=Query,
