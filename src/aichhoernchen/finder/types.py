@@ -144,6 +144,24 @@ class ImageAnalyserResponse:
     description: str
     spam_score: int
 
+
+@type(FoundObject)
+class FoundObjectCreateType:
+    pk: int
+    short_title: auto
+    long_title: auto
+    description: auto
+    lat: auto
+    long: auto
+    timestamp: auto
+    finder_name: auto
+    finder_email: auto
+    finder_phone: auto
+    verified: auto
+    key: auto
+    deposit: Optional[LostPropertyOfficeType]
+
+
 # inputs
 @input(FoundObject)
 class FoundObjectInput:
