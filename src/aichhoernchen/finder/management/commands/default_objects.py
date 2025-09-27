@@ -10,12 +10,15 @@ from ...models import FoundObject, LostPropertyOffice
 class Command(BaseCommand):
     help = "Imports default data for lost property offices."
 
-
     def handle(self, *args: Any, **options: Any) -> None:
-        objects = set(FoundObject.objects.all().values_list("description", flat=True))
+        objects = set(
+            FoundObject.objects.all().values_list("description", flat=True),
+        )
         muenster_office = LostPropertyOffice.objects.get(name="Stadt Münster")
 
-        with open(settings.BASE_DIR / "finder" / "static" / "objects.json", "r") as json_file:
+        with open(
+            settings.BASE_DIR / "finder" / "static" / "objects.json",
+        ) as json_file:
             data = json.load(json_file)
             FoundObject.objects.filter(description__in=objects).delete()
 
@@ -25,7 +28,7 @@ class Command(BaseCommand):
                     long_title=object.get("long_title", ""),
                     description=object.get("description", ""),
                     lat=object.get("lat", 0.0),
-                    long=object.get("lng", 0.0),
+                    long=object.get("long", 0.0),
                     timestamp=f"{object.get("timestamp", "2023-01-01T00:00:00")}+00:00",
                     finder_name=object.get("finder_name", ""),
                     finder_email=object.get("finder_email", ""),
