@@ -26,6 +26,7 @@ class FoundObject(models.Model):
     finder_name = models.TextField()
     finder_email = models.EmailField()
     finder_phone = models.TextField()
+    verified = models.BooleanField(default=False)
     deposit = models.ForeignKey(LostPropertyOffice, related_name="found_objects", on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self) -> str:
