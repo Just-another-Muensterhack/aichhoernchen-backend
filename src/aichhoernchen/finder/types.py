@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Optional
 
+from django.contrib.postgres.search import SearchQuery, SearchVector
 from django.db.models import Q, QuerySet
 from geopy.distance import distance
 from strawberry import auto
@@ -30,6 +31,33 @@ class FoundObjectFilter:
     finder_phone: auto
     deposit: Optional[LostPropertyOfficeFilter]
 
+    @filter_field
+    def distance(
+        self,
+        queryset: QuerySet,
+        value: JSON,
+        prefix: str,
+    ) -> tuple[QuerySet, Q]:
+        filtered_obj = []
+
+        for obj in queryset:
+            obj_distance = distance((value.get("lat"), value.get("long")), (obj.lat, obj.long)).km
+            if obj_distance <= value.get("distance"):
+                filtered_obj.append(obj.pk)
+        return queryset, Q(pk__in=filtered_obj)
+
+    @filter_field
+    def search(
+        self,
+        queryset: QuerySet,
+        value: str,
+        prefix: str,
+    ) -> tuple[QuerySet, Q]:
+        return queryset.annotate(
+            search=SearchVector('short_title', 'long_title', 'description', config='german'),
+        ), Q(search=SearchQuery(value, config='german'))
+
+
 
 @filter_type(LostPropertyOffice, lookups=True)
 class LostPropertyOfficeFilter:
@@ -42,7 +70,7 @@ class LostPropertyOfficeFilter:
     link: auto
 
     @filter_field
-    def test_distance(
+    def distance(
         self,
         queryset: QuerySet,
         value: JSON,
