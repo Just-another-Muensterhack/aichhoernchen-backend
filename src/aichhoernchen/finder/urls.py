@@ -5,5 +5,5 @@ from strawberry.django.views import GraphQLView
 from .schema import schema
 
 urlpatterns = [
-    path("", csrf_exempt(GraphQLView.as_view(schema=schema))),
+    path("", csrf_exempt(GraphQLView.as_view(schema=schema, multipart_uploads_enabled=True))),
 ]
