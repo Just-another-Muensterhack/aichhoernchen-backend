@@ -1,3 +1,5 @@
+from hashlib import sha1
+
 from django.db import models
 
 
@@ -28,3 +30,15 @@ class FoundObject(models.Model):
 
     def __str__(self) -> str:
         return f"{self.finder_name} found {self.short_title} at {self.timestamp}"
+
+
+    @property
+    def anonymized_name(self) -> str:
+        return f"{self.finder_name[0]}{"*" * 9}"
+
+    @property
+    def anonymized_email(self) -> str:
+        domain = "aichhoernchen.de"
+
+        sha1_hash = sha1(self.finder_email.encode('utf-8')).hexdigest()
+        return f"{sha1_hash[:10]}@{domain}"
