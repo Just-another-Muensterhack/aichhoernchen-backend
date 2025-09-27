@@ -18,15 +18,31 @@ class Query:
     lost_property_offices: list[LostPropertyOfficeType] = strawberry_django.field()
 
 
+@strawberry.type
+class ImageAnalyserResponse:
+    short_title: str
+    long_title: str
+    description: str
+    spam_score: int
+
+
+ImageAnalyserResponseType = strawberry.union("ImageAnalyserResponseType", (ImageAnalyserResponse,))
+
 
 @strawberry.type
 class Mutation:
     found_object: FoundObjectType = mutations.create(FoundObjectInput)
 
     @strawberry.mutation
-    def read_image(self, image: Upload) -> str:
+    def read_image(self, image: Upload) -> ImageAnalyserResponseType:
         analyser = ImageAnalyser()
-        return analyser.analyse_image(image.read())
+        response = analyser.analyse_image(image.read())
+        return ImageAnalyserResponseType(
+            short_title=response.get("short_title", ""),
+            long_title=response.get("long_title", ""),
+            description=response.get("description", ""),
+            spam_score=int(response.get("spam_score", 0)),
+        )
 
 
 schema = strawberry.Schema(
@@ -35,5 +51,5 @@ schema = strawberry.Schema(
     extensions=[
         DjangoOptimizerExtension,
     ],
-    scalar_overrides={UploadedFile: Upload}
+    scalar_overrides={UploadedFile: Upload},
 )
