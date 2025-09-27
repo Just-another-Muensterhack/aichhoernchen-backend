@@ -114,6 +114,7 @@ class FoundObjectType:
     timestamp: auto
     anonymized_name: auto
     anonymized_email: auto
+    verified: auto
     deposit: Optional[LostPropertyOfficeType]
 
 

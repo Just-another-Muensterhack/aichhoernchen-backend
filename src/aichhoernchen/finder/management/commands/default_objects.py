@@ -30,5 +30,6 @@ class Command(BaseCommand):
                     finder_name=object.get("finder_name", ""),
                     finder_email=object.get("finder_email", ""),
                     finder_phone=object.get("finder_phone", ""),
+                    verified=True,
                     deposit=muenster_office,
                 )
