@@ -152,4 +152,7 @@ class FoundObjectInput:
     description: auto
     lat: auto
     long: auto
+    finder_name: auto
+    finder_email: auto
+    finder_phone: auto
     deposit: auto
