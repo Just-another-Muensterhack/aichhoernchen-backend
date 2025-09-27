@@ -5,6 +5,7 @@ from strawberry.file_uploads import Upload
 from strawberry_django import mutations
 from strawberry_django.optimizer import DjangoOptimizerExtension
 
+from .agent.service import ImageAnalyser
 from .types import FoundObjectInput, FoundObjectType, LostPropertyOfficeType
 
 
@@ -21,10 +22,11 @@ class Query:
 @strawberry.type
 class Mutation:
     found_object: FoundObjectType = mutations.create(FoundObjectInput)
-    
+
     @strawberry.mutation
     def read_image(self, image: Upload) -> str:
-        return image.read().decode("utf-8")
+        analyser = ImageAnalyser()
+        return analyser.analyse_image(image.read())
 
 
 schema = strawberry.Schema(
