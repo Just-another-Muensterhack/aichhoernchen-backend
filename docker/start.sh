@@ -14,7 +14,7 @@ echo "==> Importing default data..."
 python manage.py default_deposits
 python manage.py default_objects
 
-echo "==> Collecting static files..."
+echo "==> Create admin users..."
 python manage.py createsuperuser --noinput
 
 echo "==> Starting Gunicorn (WSGI) on 0.0.0.0:${PORT}..."
