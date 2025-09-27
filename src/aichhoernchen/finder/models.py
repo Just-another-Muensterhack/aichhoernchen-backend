@@ -1,4 +1,5 @@
 from hashlib import sha1
+from uuid import uuid4
 
 from django.db import models
 
@@ -27,11 +28,11 @@ class FoundObject(models.Model):
     finder_email = models.EmailField()
     finder_phone = models.TextField()
     verified = models.BooleanField(default=False)
+    key = models.UUIDField(editable=False, default=uuid4)
     deposit = models.ForeignKey(LostPropertyOffice, related_name="found_objects", on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self) -> str:
         return f"{self.finder_name} found {self.short_title} at {self.timestamp}"
-
 
     @property
     def anonymized_name(self) -> str:
