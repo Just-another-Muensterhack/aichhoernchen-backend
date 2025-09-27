@@ -155,6 +155,13 @@ class LostPropertyOfficeType:
     found_objects: Optional[FoundObjectType]
 
 
+@strawberry.type
+class ImageAnalyserResponse:
+    short_title: str
+    long_title: str
+    description: str
+    spam_score: int
+
 # inputs
 @input(FoundObject)
 class FoundObjectInput:
