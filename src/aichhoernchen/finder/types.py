@@ -26,9 +26,6 @@ class FoundObjectFilter:
     long_title: auto
     description: auto
     timestamp: auto
-    finder_name: auto
-    finder_email: auto
-    finder_phone: auto
     deposit: Optional[LostPropertyOfficeFilter]
 
     @filter_field
@@ -62,12 +59,7 @@ class FoundObjectFilter:
 @filter_type(LostPropertyOffice, lookups=True)
 class LostPropertyOfficeFilter:
     name: auto
-    email: auto
-    phone: auto
-    lat: auto
-    long: auto
     address: auto
-    link: auto
 
     @filter_field
     def distance(
@@ -92,11 +84,6 @@ class FoundObjectOrder:
     short_title: auto
     long_title: auto
     description: auto
-    lat: auto
-    long: auto
-    finder_name: auto
-    finder_email: auto
-    finder_phone: auto
     timestamp: auto
     deposit: LostPropertyOfficeOrder
 
@@ -106,12 +93,7 @@ class FoundObjectOrder:
 class LostPropertyOfficeOrder:
     pk: int
     name: auto
-    email: auto
-    phone: auto
     address: auto
-    link: auto
-    lat: auto
-    long: auto
     found_objects: FoundObjectOrder
 
 
@@ -130,9 +112,8 @@ class FoundObjectType:
     lat: auto
     long: auto
     timestamp: auto
-    finder_name: auto
-    finder_email: auto
-    finder_phone: auto
+    anonymized_name: auto
+    anonymized_email: auto
     deposit: Optional[LostPropertyOfficeType]
 
 
@@ -170,7 +151,4 @@ class FoundObjectInput:
     description: auto
     lat: auto
     long: auto
-    finder_name: auto
-    finder_email: auto
-    finder_phone: auto
     deposit: auto
