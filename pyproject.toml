@@ -45,7 +45,7 @@ packages = ["src/aichhoernchen"]
 dev = [
     "jupyterlab>=4.4.3",
     "mypy>=1.16.0",
-    "pytest>=8.4.0",
+    "pytest>=9.0.3",
     "pytest-cov>=6.2.1",
     "ruff>=0.11.13",
 ]
