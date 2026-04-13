@@ -23,7 +23,7 @@ dependencies = [
     "geopy>=2.4.1",
     "openai>=2.31.0",
     "psycopg[binary]>=3.2.10",
-    "strawberry-graphql-django>=0.65.1",
+    "strawberry-graphql-django>=0.82.1",
     "whitenoise>=6.11.0",
 ]
 
